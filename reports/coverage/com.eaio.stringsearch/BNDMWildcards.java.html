@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BNDMWildcards.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">stringsearch</a> &gt; <a href="index.source.html" class="el_package">com.eaio.stringsearch</a> &gt; <span class="el_source">BNDMWildcards.java</span></div><h1>BNDMWildcards.java</h1><pre class="source lang-java linenums">/* 
+ * BNDMWildcards.java
+ * 
+ * Created on 19.01.2004.
+ *
+ * eaio: StringSearch - high-performance pattern matching algorithms in Java
+ * Copyright (c) 2003-2010 Johann Burkard (&lt;http://johannburkard.de&gt;)
+ * &lt;http://eaio.com&gt;
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the &quot;Software&quot;),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
+package com.eaio.stringsearch;
+
+/**
+ * An implementation of the {@link BNDM} algorithm with wildcards (&quot;don't care&quot;
+ * symbols). The wildcard character is initially '.', but any character can be
+ * used.
+ * &lt;p/&gt;
+ * Please note that the wildcard character has changed from '?' in
+ * StringSearch version 1 to '.' in version 2.
+ *
+ * @author &lt;a href=&quot;http://johannburkard.de&quot;&gt;Johann Burkard&lt;/a&gt;
+ * @version $Id: BNDMWildcards.java 3105 2010-06-29 10:38:44Z johann $
+ * @see &lt;a href=&quot;http://johannburkard.de/software/stringsearch/&quot;&gt;StringSearch
+ *      &amp;#8211; high-performance pattern matching algorithms in Java&lt;/a&gt;
+ * @see BNDMWildcards#BNDMWildcards(char)
+ * @see #processBytes(byte[], byte)
+ * @see #processChars(char[], char)
+ * @see com.eaio.stringsearch.BNDM
+ */
+public class BNDMWildcards extends BNDM {
+
+    /**
+     * The wildcard character.
+     */
+    public final char wildcard;
+
+    /**
+     * Constructor for BNDMWildcards. Uses '.' as the wildcard character.
+     */
+    public BNDMWildcards() {
+<span class="fc" id="L59">        this('.');</span>
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * Constructor for BNDMWildcards.
+     *
+     * @param wildcard
+     */
+    public BNDMWildcards(char wildcard) {
+<span class="fc" id="L68">        super();</span>
+<span class="fc" id="L69">        this.wildcard = wildcard;</span>
+<span class="fc" id="L70">    }</span>
+
+    /**
+     * Pre-processing of the pattern. The pattern may not exceed 32 bytes in
+     * length. If it does, &lt;b&gt;only it's first 32 bytes&lt;/b&gt; are processed which
+     * might lead to unexpected results. The wildcard character is obtained
+     * from the {@link #wildcard} field. Returns an &lt;code&gt;int&lt;/code&gt;
+     * array which is serializable.
+     *
+     * @see com.eaio.stringsearch.StringSearch#processBytes(byte[])
+     * @see #processBytes(byte[], byte)
+     */
+    @Override
+    public Object processBytes(byte[] pattern) {
+<span class="fc" id="L84">        return processBytes(pattern, (byte) wildcard);</span>
+    }
+
+    /**
+     * Pre-processes the pattern. The pattern may not exceed 32 characters in
+     * length. If it does, &lt;b&gt;only it's first 32 bytes&lt;/b&gt; are processed which
+     * might lead to unexpected results. The wildcard character is obtained
+     * from the {@link #wildcard} field. Returns a {@link CharIntMap}
+     * which is serializable.
+     *
+     * @param pattern the &lt;code&gt;char&lt;/code&gt; array containing the pattern, may
+     *                not be &lt;code&gt;null&lt;/code&gt;
+     * @return a {@link CharIntMap}
+     * @see StringSearch#processChars(char[])
+     * @see #processChars(char[], char)
+     */
+    @Override
+    public Object processChars(char[] pattern) {
+<span class="fc" id="L102">        return processChars(pattern, wildcard);</span>
+    }
+
+    /**
+     * Pre-processing of the pattern. The pattern may not exceed 32 bytes in
+     * length. If it does, &lt;b&gt;only it's first 32 bytes&lt;/b&gt; are processed which
+     * might lead to unexpected results. Returns an &lt;code&gt;int&lt;/code&gt; array
+     * which is serializable.
+     *
+     * @param pattern the &lt;code&gt;byte&lt;/code&gt; array containing the pattern, may
+     *                not be &lt;code&gt;null&lt;/code&gt;
+     * @param w       the wildcard &lt;code&gt;byte&lt;/code&gt; character
+     * @return an &lt;code&gt;int&lt;/code&gt; array
+     */
+    public Object processBytes(byte[] pattern, byte w) {
+<span class="fc" id="L117">        int j = 0;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        int end = pattern.length &lt; 32 ? pattern.length : 32;</span>
+
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        for (int i = 0; i &lt; end; ++i) {</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">            if (pattern[i] == w) {</span>
+<span class="fc" id="L122">                j |= (1 &lt;&lt; end - i - 1);</span>
+            }
+        }
+
+<span class="fc" id="L126">        int[] b = new int[256];</span>
+
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        if (j != 0) {</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">            for (int i = 0; i &lt; b.length; i++) {</span>
+<span class="fc" id="L130">                b[i] = j;</span>
+            }
+        }
+
+<span class="fc" id="L134">        j = 1;</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        for (int i = end - 1; i &gt;= 0; --i, j &lt;&lt;= 1) {</span>
+<span class="fc" id="L136">            b[index(pattern[i])] |= j;</span>
+        }
+
+<span class="fc" id="L139">        return b;</span>
+    }
+
+    /**
+     * Pre-processes the pattern. The pattern may not exceed 32 characters in
+     * length. If it does, &lt;b&gt;only it's first 32 bytes&lt;/b&gt; are processed which
+     * might lead to unexpected results. Returns a {@link CharIntMap} which is
+     * serializable.
+     *
+     * @param pattern the String array containing the pattern, may not be
+     *                &lt;code&gt;null&lt;/code&gt;
+     * @param w       the wildcard character
+     * @return a {@link CharIntMap}.
+     */
+    public Object processString(String pattern, char w) {
+<span class="nc" id="L154">        return processChars(getChars(pattern), w);</span>
+    }
+
+    /**
+     * Pre-processes the pattern. The pattern may not exceed 32 characters in
+     * length. If it does, &lt;b&gt;only it's first 32 bytes&lt;/b&gt; are processed which
+     * might lead to unexpected results. Returns a {@link CharIntMap}.
+     *
+     * @param pattern the &lt;code&gt;char&lt;/code&gt; array containing the pattern, may
+     *                not be &lt;code&gt;null&lt;/code&gt;
+     * @param w       the wildcard character
+     * @return a {@link CharIntMap}.
+     */
+    public Object processChars(char[] pattern, char w) {
+<span class="fc" id="L168">        int j = 0;</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        int end = pattern.length &lt; 32 ? pattern.length : 32;</span>
+
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        for (int i = 0; i &lt; end; ++i) {</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">            if (pattern[i] == w) {</span>
+<span class="fc" id="L173">                j |= (1 &lt;&lt; end - i - 1);</span>
+            }
+        }
+
+<span class="fc" id="L177">        CharIntMap b = createCharIntMap(pattern, end, j);</span>
+
+<span class="fc" id="L179">        j = 1;</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">        for (int i = end - 1; i &gt;= 0; --i, j &lt;&lt;= 1) {</span>
+<span class="fc" id="L181">            b.set(pattern[i], b.get(pattern[i]) | j);</span>
+        }
+
+<span class="fc" id="L184">        return b;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BoyerMooreHorspool.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">stringsearch</a> &gt; <a href="index.source.html" class="el_package">com.eaio.stringsearch</a> &gt; <span class="el_source">BoyerMooreHorspool.java</span></div><h1>BoyerMooreHorspool.java</h1><pre class="source lang-java linenums">/*
+ * BoyerMooreHorspool.java
+ *
+ * Created on 12.09.2003
+ *
+ * eaio: StringSearch - high-performance pattern matching algorithms in Java
+ * Copyright (c) 2003-2010 Johann Burkard (&lt;http://johannburkard.de&gt;)
+ * &lt;http://eaio.com&gt;
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the &quot;Software&quot;),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
+package com.eaio.stringsearch;
+
+/**
+ * An implementation of Horspool's improved version of the Boyer-Moore String
+ * searching algorithm. See &quot;Practical fast searching in strings&quot; (appeared in
+ * &lt;em&gt;Software - Practice &amp; Experience, 10(6):501-506&lt;/em&gt;). Unfortunately,
+ * there seems to be no on-line version of his paper.
+ * &lt;p/&gt;
+ * This is the second fastest algorithm in this library for the
+ * &lt;code&gt;searchChars&lt;/code&gt; and &lt;code&gt;searchString&lt;/code&gt;. Except for very
+ * short patterns (&amp;lt; 5 characters), it is always faster than any other
+ * algorithm except {@link com.eaio.stringsearch.BoyerMooreHorspoolRaita} and
+ * faster than {@link String#indexOf(String)} by more than 5 times for
+ * patterns longer than 24 characters. It's &lt;code&gt;searchBytes&lt;/code&gt; methods
+ * are slightly faster than in the
+ * {@link com.eaio.stringsearch.BoyerMooreHorspoolRaita} algorithm.
+ * &lt;p/&gt;
+ * This implementation is based on &lt;a
+ * href=&quot;http://www.dcc.uchile.cl/~rbaeza/handbook/algs/7/713b.srch.c&quot;
+ * target=&quot;_top&quot;&gt;Ricardo Baeza-Yates' implementation&lt;/a&gt;.
+ *
+ * @author &lt;a href=&quot;http://johannburkard.de&quot;&gt;Johann Burkard&lt;/a&gt;
+ * @version $Id: BoyerMooreHorspool.java 3105 2010-06-29 10:38:44Z johann $
+ * @see &lt;a href=&quot;http://johannburkard.de/software/stringsearch/&quot;&gt;StringSearch
+ *      &amp;#8211; high-performance pattern matching algorithms in Java&lt;/a&gt;
+ */
+public class BoyerMooreHorspool extends StringSearch {
+
+    /**
+     * Constructor for BoyerMooreHorspool. Note that it is not required to
+     * create multiple instances.
+     */
+    public BoyerMooreHorspool() {
+<span class="fc" id="L62">        super();</span>
+<span class="fc" id="L63">    }</span>
+
+    /**
+     * Returns a &lt;code&gt;int&lt;/code&gt; array for patterns longer than 2 characters, &lt;code&gt;null&lt;/code&gt; otherwise.
+     *
+     * @see com.eaio.stringsearch.StringSearch#processBytes(byte[])
+     */
+    @Override
+    public Object processBytes(byte[] pattern) {
+<span class="fc bfc" id="L72" title="All 4 branches covered.">        if (pattern.length == 1 || pattern.length == 2) {</span>
+<span class="fc" id="L73">            return null;</span>
+        }
+
+<span class="fc" id="L76">        int[] skip = new int[256];</span>
+
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        for (int i = 0; i &lt; skip.length; ++i) {</span>
+<span class="fc" id="L79">            skip[i] = pattern.length;</span>
+        }
+
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (int i = 0; i &lt; pattern.length - 1; ++i) {</span>
+<span class="fc" id="L83">            skip[index(pattern[i])] = pattern.length - i - 1;</span>
+        }
+
+<span class="fc" id="L86">        return skip;</span>
+    }
+
+    /**
+     * Returns a {@link CharIntMap} for patterns longer than 2 characters, &lt;code&gt;null&lt;/code&gt; otherwise.
+     *
+     * @see com.eaio.stringsearch.StringSearch#processChars(char[])
+     */
+    @Override
+    public Object processChars(char[] pattern) {
+<span class="fc bfc" id="L96" title="All 4 branches covered.">        if (pattern.length == 1 || pattern.length == 2) {</span>
+<span class="fc" id="L97">            return null;</span>
+        }
+
+<span class="fc" id="L100">        CharIntMap skip = createCharIntMap(pattern, pattern.length);</span>
+
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        for (int i = 0; i &lt; pattern.length - 1; ++i) {</span>
+<span class="fc" id="L103">            skip.set(pattern[i], pattern.length - i - 1);</span>
+        }
+
+<span class="fc" id="L106">        return skip;</span>
+    }
+
+    /**
+     * @see com.eaio.stringsearch.StringSearch#searchBytes(byte[], int, int,
+     *      byte[], java.lang.Object)
+     */
+    @Override
+    public int searchBytes(byte[] text, int textStart, int textEnd,
+                           byte[] pattern, Object processed) {
+
+        // Unrolled fast paths for patterns of length 1 and 2. Suggested by someone who doesn't want to be named.
+
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        if (pattern.length == 1) {</span>
+<span class="fc" id="L120">            final int nLimit = Math.min(text.length, textEnd);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">            for (int n = textStart; n &lt; nLimit; n++) {</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">                if (text[n] == pattern[0])</span>
+<span class="fc" id="L123">                    return n;</span>
+            }
+<span class="fc" id="L125">            return -1;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        } else if (pattern.length == 2) {</span>
+<span class="fc" id="L127">            final int nLimit = Math.min(text.length, textEnd) - 1;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">            for (int n = textStart; n &lt; nLimit; n++) {</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">                if (text[n] == pattern[0]) {</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">                    if (text[n + 1] == pattern[1])</span>
+<span class="fc" id="L131">                        return n;</span>
+                }
+            }
+<span class="fc" id="L134">            return -1;</span>
+        }
+
+<span class="fc" id="L137">        int[] skip = (int[]) processed;</span>
+
+        int i, j, k;
+
+
+<span class="fc" id="L142">        final int lengthMinusOne = pattern.length - 1;</span>
+
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        for (k = lengthMinusOne; k &lt; textEnd; k += skip[index(text[k])]) {</span>
+<span class="pc bpc" id="L145" title="1 of 6 branches missed.">            for (j = lengthMinusOne, i = k; j &gt;= 0 &amp;&amp; text[i] == pattern[j]</span>
+<span class="fc" id="L146">                    &amp;&amp; i &gt;= textStart; --j, --i) {</span>
+                // Blank.
+            }
+<span class="fc bfc" id="L149" title="All 2 branches covered.">            if (j == -1) return ++i;</span>
+        }
+
+<span class="fc" id="L152">        return -1;</span>
+
+    }
+
+    /**
+     * @see com.eaio.stringsearch.StringSearch#searchChars(char[], int, int, char[], Object)
+     */
+    @Override
+    public int searchChars(char[] text, int textStart, int textEnd,
+                           char[] pattern, Object processed) {
+
+        // Unrolled fast paths for patterns of length 1 and 2. Suggested by someone who doesn't want to be named.
+
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        if (pattern.length == 1) {</span>
+<span class="fc" id="L166">            final int nLimit = Math.min(text.length, textEnd);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">            for (int n = textStart; n &lt; nLimit; n++) {</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">                if (text[n] == pattern[0])</span>
+<span class="fc" id="L169">                    return n;</span>
+            }
+<span class="fc" id="L171">            return -1;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        } else if (pattern.length == 2) {</span>
+<span class="fc" id="L173">            final int nLimit = Math.min(text.length, textEnd) - 1;</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">            for (int n = textStart; n &lt; nLimit; n++) {</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">                if (text[n] == pattern[0]) {</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">                    if (text[n + 1] == pattern[1])</span>
+<span class="fc" id="L177">                        return n;</span>
+                }
+            }
+<span class="fc" id="L180">            return -1;</span>
+        }
+
+<span class="fc" id="L183">        CharIntMap skip = (CharIntMap) processed;</span>
+
+        int i, j, k;
+
+<span class="fc" id="L187">        final int lengthMinusOne = pattern.length - 1;</span>
+
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        for (k = lengthMinusOne; k &lt; textEnd; k += skip.get(text[k])) {</span>
+<span class="pc bpc" id="L190" title="1 of 6 branches missed.">            for (j = lengthMinusOne, i = k; j &gt;= 0 &amp;&amp; text[i] == pattern[j]</span>
+<span class="fc" id="L191">                    &amp;&amp; i &gt;= textStart; --j, --i) {</span>
+                // Blank.
+            }
+<span class="fc bfc" id="L194" title="All 2 branches covered.">            if (j == -1) return ++i;</span>
+        }
+
+<span class="fc" id="L197">        return -1;</span>
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

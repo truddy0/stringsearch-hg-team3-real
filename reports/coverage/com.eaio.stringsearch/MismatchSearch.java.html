@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MismatchSearch.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">stringsearch</a> &gt; <a href="index.source.html" class="el_package">com.eaio.stringsearch</a> &gt; <span class="el_source">MismatchSearch.java</span></div><h1>MismatchSearch.java</h1><pre class="source lang-java linenums">/* 
+ * MismatchSearch.java
+ * 
+ * Created on 12.11.2003.
+ *
+ * eaio: StringSearch - high-performance pattern matching algorithms in Java
+ * Copyright (c) 2003-2010 Johann Burkard (&lt;http://johannburkard.de&gt;)
+ * &lt;http://eaio.com&gt;
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the &quot;Software&quot;),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
+package com.eaio.stringsearch;
+
+/**
+ * Subclasses of MismatchSearch allow for searching with a fixed number of
+ * possible errors. Subclasses of this class return an &lt;code&gt;int&lt;/code&gt; array
+ * of two elements with the first &lt;code&gt;int&lt;/code&gt; being the position at which
+ * the hit occurred and the second &lt;code&gt;int&lt;/code&gt; being the number of
+ * mismatches at the position.
+ * &lt;p/&gt;
+ * Example:
+ * &lt;pre&gt;
+ * int[] positions = new ShiftOrMismatches().searchString(&quot;this is null&quot;,
+ * &quot;nu1l&quot;, 1);
+ * &lt;/pre&gt;
+ * positions[0] would be 8, positions[1] (the number of mismatches) would be 1.
+ *
+ * @author &lt;a href=&quot;http://johannburkard.de&quot;&gt;Johann Burkard&lt;/a&gt;
+ * @version $Id: MismatchSearch.java 3105 2010-06-29 10:38:44Z johann $
+ * @see &lt;a href=&quot;http://johannburkard.de/software/stringsearch/&quot;&gt;StringSearch
+ *      &amp;#8211; high-performance pattern matching algorithms in Java&lt;/a&gt;
+ */
+public abstract class MismatchSearch extends StringSearch {
+
+    /**
+     * Constructor for MismatchSearch. Note that it is not required to create
+     * multiple instances. This constructor does nothing.
+     */
+    protected MismatchSearch() {
+<span class="fc" id="L57">        super();</span>
+<span class="fc" id="L58">    }</span>
+
+    /*
+     * Pre-processing methods
+     */
+
+    /**
+     * Pre-processes the pattern, allowing &lt;b&gt;zero&lt;/b&gt; errors.
+     * &lt;p/&gt;
+     * Identical to &lt;code&gt;process(pattern, 0)&lt;/code&gt;
+     *
+     * @param pattern the &lt;code&gt;byte&lt;/code&gt; array containing the pattern, may
+     *                not be &lt;code&gt;null&lt;/code&gt;
+     * @see com.eaio.stringsearch.StringSearch#processBytes(byte[])
+     * @see #processBytes(byte[], int)
+     */
+    @Override
+    public final Object processBytes(byte[] pattern) {
+<span class="nc" id="L76">        return processBytes(pattern, 0);</span>
+    }
+
+    /**
+     * Pre-processes the pattern, allowing k errors.
+     *
+     * @param pattern the &lt;code&gt;byte&lt;/code&gt; array containing the pattern, may
+     *                not be &lt;code&gt;null&lt;/code&gt;
+     * @param k       the editing distance
+     * @return an Object
+     */
+    public abstract Object processBytes(byte[] pattern, int k);
+
+    /**
+     * Pre-processes the pattern, allowing &lt;b&gt;zero&lt;/b&gt; errors.
+     * &lt;p/&gt;
+     * Identical to &lt;code&gt;process(pattern, 0)&lt;/code&gt;.
+     *
+     * @param pattern a &lt;code&gt;char&lt;/code&gt; array containing the pattern, may not
+     *                be &lt;code&gt;null&lt;/code&gt;
+     * @return an Object
+     * @see #processChars(char[], int)
+     * @see com.eaio.stringsearch.StringSearch#processChars(char[])
+     */
+    @Override
+    public final Object processChars(char[] pattern) {
+<span class="nc" id="L102">        return processChars(pattern, 0);</span>
+    }
+
+    /**
+     * Pre-processes a &lt;code&gt;char&lt;/code&gt; array, allowing k errors.
+     *
+     * @param pattern a &lt;code&gt;char&lt;/code&gt; array containing the pattern, may not
+     *                be &lt;code&gt;null&lt;/code&gt;
+     * @param k       the editing distance
+     * @return an Object
+     */
+    public abstract Object processChars(char[] pattern, int k);
+
+    /**
+     * Pre-processes a String, allowing k errors. This method should not be used
+     * directly because it is implicitly called in the
+     * {@link #searchString(String, String)} methods.
+     *
+     * @param pattern the String containing the pattern, may not be
+     *                &lt;code&gt;null&lt;/code&gt;
+     * @param k       the editing distance
+     * @return an Object
+     */
+    public Object processString(String pattern, int k) {
+<span class="nc" id="L126">        return processChars(StringSearch.getChars(pattern), k);</span>
+    }
+
+    /*
+     * Byte searching methods
+     */
+
+    /**
+     * @see com.eaio.stringsearch.StringSearch#searchBytes(byte[], int, int,
+     *      byte[], Object)
+     * @see #searchBytes(byte[], int, int, byte[], Object, int)
+     */
+    @Override
+    public final int searchBytes(byte[] text, int textStart, int textEnd,
+                                 byte[] pattern, Object processed) {
+
+<span class="nc" id="L142">        return searchBytes(text, textStart, textEnd, pattern, processed, 0)[0];</span>
+
+    }
+
+    /**
+     * Returns the position in the text at which the pattern was found. Returns
+     * -1 if the pattern was not found.
+     *
+     * @param text    the &lt;code&gt;byte&lt;/code&gt; array containing the text, may not be
+     *                &lt;code&gt;null&lt;/code&gt;
+     * @param pattern the &lt;code&gt;byte&lt;/code&gt; array containing the pattern, may not
+     *                be &lt;code&gt;null&lt;/code&gt;
+     * @param k       the editing distance
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchBytes(byte[], int, int, byte[], Object, int)
+     */
+    public final int[] searchBytes(byte[] text, byte[] pattern, int k) {
+<span class="fc" id="L159">        return searchBytes(text, 0, text.length, pattern, processBytes(</span>
+<span class="fc" id="L160">                pattern, k), k);</span>
+    }
+
+    /**
+     * Returns the position in the text at which the pattern was found. Returns
+     * -1 if the pattern was not found.
+     *
+     * @param text      the &lt;code&gt;byte&lt;/code&gt; array containing the text, may not be
+     *                  &lt;code&gt;null&lt;/code&gt;
+     * @param pattern   the &lt;code&gt;byte&lt;/code&gt; array containing the pattern, may
+     *                  not be &lt;code&gt;null&lt;/code&gt;
+     * @param processed an Object as returned from
+     *                  {@link #processBytes(byte[], int)}, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param k         the editing distance
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchBytes(byte[], int, int, byte[], Object, int)
+     */
+    public final int[] searchBytes(byte[] text, byte[] pattern,
+                                   Object processed, int k) {
+
+<span class="nc" id="L180">        return searchBytes(text, 0, text.length, pattern, processed, k);</span>
+
+    }
+
+    /**
+     * Returns the position in the text at which the pattern was found. Returns
+     * -1 if the pattern was not found.
+     *
+     * @param text      the &lt;code&gt;byte&lt;/code&gt; array containing the text, may not be
+     *                  &lt;code&gt;null&lt;/code&gt;
+     * @param textStart at which position in the text the comparing should
+     *                  start
+     * @param pattern   the &lt;code&gt;byte&lt;/code&gt; array containing the pattern, may
+     *                  not be &lt;code&gt;null&lt;/code&gt;
+     * @param k         the editing distance
+     * @return int the position in the text or -1 if the pattern was not found
+     * @see #searchBytes(byte[], int, int, byte[], Object, int)
+     */
+    public final int[] searchBytes(byte[] text, int textStart, byte[] pattern,
+                                   int k) {
+
+<span class="nc" id="L201">        return searchBytes(text, textStart, text.length, pattern,</span>
+<span class="nc" id="L202">                processBytes(pattern, k), k);</span>
+
+    }
+
+    /**
+     * Returns the position in the text at which the pattern was found. Returns
+     * -1 if the pattern was not found.
+     *
+     * @param text      the &lt;code&gt;byte&lt;/code&gt; array containing the text, may not be
+     *                  &lt;code&gt;null&lt;/code&gt;
+     * @param textStart at which position in the text the comparing should
+     *                  start
+     * @param pattern   the pattern to search for, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param processed
+     * @param k         the editing distance
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchBytes(byte[], int, int, byte[], Object, int)
+     */
+    public final int[] searchBytes(byte[] text, int textStart, byte[] pattern,
+                                   Object processed, int k) {
+
+<span class="nc" id="L223">        return searchBytes(text, textStart, text.length, pattern, processed, k);</span>
+
+    }
+
+    /**
+     * Returns the position in the text at which the pattern was found. Returns
+     * -1 if the pattern was not found.
+     *
+     * @param text      text the &lt;code&gt;byte&lt;/code&gt; array containing the text, may
+     *                  not be &lt;code&gt;null&lt;/code&gt;
+     * @param textStart at which position in the text the comparing should
+     *                  start
+     * @param textEnd   at which position in the text comparing should stop
+     * @param pattern   the &lt;code&gt;byte&lt;/code&gt; array containing the pattern, may
+     *                  not be &lt;code&gt;null&lt;/code&gt;
+     * @param k         the editing distance
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchBytes(byte[], int, int, byte[], Object, int)
+     */
+    public final int[] searchBytes(byte[] text, int textStart, int textEnd,
+                                   byte[] pattern, int k) {
+
+<span class="nc" id="L245">        return searchBytes(text, textStart, textEnd, pattern, processBytes(</span>
+<span class="nc" id="L246">                pattern, k), k);</span>
+
+    }
+
+    /**
+     * Returns the position in the text at which the pattern was found. Returns
+     * -1 if the pattern was not found.
+     *
+     * @param text      text the &lt;code&gt;byte&lt;/code&gt; array containing the text, may
+     *                  not be &lt;code&gt;null&lt;/code&gt;
+     * @param textStart at which position in the text the comparing should
+     *                  start
+     * @param textEnd   at which position in the text comparing should stop
+     * @param pattern   the pattern to search for, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param processed an Object as returned from
+     *                  {@link #processBytes(byte[], int)}, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param k         the editing distance
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #processBytes(byte[], int)
+     */
+    public abstract int[] searchBytes(byte[] text, int textStart,
+                                      int textEnd, byte[] pattern, Object processed, int k);
+
+    /*
+    * Char searching methods
+    */
+
+    /**
+     * Finder for the given pattern in the text, starting at textStart and
+     * comparing to at most textEnd, allowing zero errors.
+     *
+     * @see StringSearch#searchChars(char[], int, int, char[], Object)
+     * @see #processChars(char[], int)
+     */
+    @Override
+    public final int searchChars(char[] text, int textStart, int textEnd,
+                                 char[] pattern, Object processed) {
+
+<span class="nc" id="L284">        return searchChars(text, textStart, textEnd, pattern, processed, 0)[0];</span>
+
+    }
+
+    /**
+     * Finder for the given pattern in the text, allowing k errors.
+     *
+     * @param text    the String containing the text, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param pattern the pattern to search for, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param k       the maximum number of mismatches (the editing distance)
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchChars(char[], int, int, char[], Object, int)
+     */
+    public final int[] searchChars(char[] text, char[] pattern, int k) {
+<span class="nc" id="L298">        return searchChars(text, 0, text.length, pattern, processChars(</span>
+<span class="nc" id="L299">                pattern, k), k);</span>
+    }
+
+    /**
+     * Finder for the given pattern in the text, allowing k errors.
+     *
+     * @param text      the String containing the text, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param pattern   the pattern to search for, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param processed an Object as returned from
+     *                  {@link #processChars(char[], int)} or {@link #processString(String, int)},
+     *                  may not be &lt;code&gt;null&lt;/code&gt;
+     * @param k         the maximum number of mismatches (the editing distance)
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchChars(char[], int, int, char[], Object, int)
+     */
+    public final int[] searchChars(char[] text, char[] pattern,
+                                   Object processed, int k) {
+
+<span class="nc" id="L317">        return searchChars(text, 0, text.length, pattern, processed, k);</span>
+
+    }
+
+    /**
+     * Finder for the given pattern in the text, starting at textStart,
+     * allowing k errors.
+     *
+     * @param text      the String containing the text, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param textStart at which position in the text the comparing should
+     *                  start
+     * @param pattern   the pattern to search for, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param k         the maximum number of mismatches (the editing distance)
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchChars(char[], int, int, char[], Object)
+     */
+    public final int[] searchChars(char[] text, int textStart,
+                                   char[] pattern, int k) {
+
+<span class="nc" id="L336">        return searchChars(text, textStart, text.length, pattern,</span>
+<span class="nc" id="L337">                processChars(pattern, k), k);</span>
+
+    }
+
+    /**
+     * Finder for the given pattern in the text, starting at textStart,
+     * allowing k errors.
+     *
+     * @param text      the String containing the text, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param textStart at which position in the text the comparing should
+     *                  start
+     * @param pattern   the pattern to search for, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param processed an Object as returned from
+     *                  {@link #processChars(char[], int)} or
+     *                  {@link #processString(String, int)}, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param k         the maximum number of mismatches (the editing distance)
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchChars(char[], int, int, char[], Object, int)
+     */
+    public final int[] searchChars(char[] text, int textStart,
+                                   char[] pattern, Object processed, int k) {
+
+<span class="nc" id="L359">        return searchChars(text, textStart, text.length, pattern, processed,</span>
+<span class="nc" id="L360">                k);</span>
+
+    }
+
+    /**
+     * Finder for the given pattern in the text, starting at textStart and
+     * comparing to at most textEnd, allowing k errors.
+     *
+     * @param text      the String containing the text, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param textStart at which position in the text the comparing should
+     *                  start
+     * @param textEnd   at which position in the text comparing should stop
+     * @param pattern   the pattern to search for, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param k         the maximum number of mismatches (the editing distance)
+     * @return the position in the text or -1 if the pattern was not found
+     */
+    public final int[] searchChars(char[] text, int textStart, int textEnd,
+                                   char[] pattern, int k) {
+
+<span class="fc" id="L379">        return searchChars(text, textStart, textEnd, pattern, processChars(</span>
+<span class="fc" id="L380">                pattern, k), k);</span>
+
+    }
+
+    /**
+     * Finder for the given pattern in the text, starting at textStart and
+     * comparing to at most textEnd, allowing k errors.
+     *
+     * @param text      the String containing the text, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param textStart at which position in the text the comparing should
+     *                  start
+     * @param textEnd   at which position in the text comparing should stop
+     * @param pattern   the pattern to search for, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param processed an Object as returned from
+     *                  {@link #processChars(char[], int)} or
+     *                  {@link #processString(String, int)}, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param k         the maximum number of mismatches (the editing distance)
+     * @return the position in the text or -1 if the pattern was not found
+     */
+    public abstract int[] searchChars(char[] text, int textStart,
+                                      int textEnd, char[] pattern, Object processed, int k);
+
+    /* String searching methods */
+
+    /**
+     * Convenience method to search for patterns in Strings. Returns the position
+     * in the text at which the pattern was found. Returns -1 if the pattern was
+     * not found.
+     *
+     * @param text    the String containing the text, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param pattern the String containing the pattern, may not be
+     *                &lt;code&gt;null&lt;/code&gt;
+     * @param k       the maximum number of mismatches (the editing distance)
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchChars(char[], int, int, char[], int)
+     */
+    public final int[] searchString(String text, String pattern, int k) {
+<span class="fc" id="L417">        return searchString(text, 0, text.length(), pattern, k);</span>
+    }
+
+    /**
+     * Convenience method to search for patterns in Strings. Returns the position
+     * in the text at which the pattern was found. Returns -1 if the pattern was
+     * not found.
+     *
+     * @param text      the String containing the text, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param pattern   the String containing the pattern, may not be
+     *                  &lt;code&gt;null&lt;/code&gt;
+     * @param processed an Object as returned from
+     *                  {@link #processChars(char[], int)} or {@link #processString(String, int)},
+     *                  may not be &lt;code&gt;null&lt;/code&gt;
+     * @param k         the maximum number of mismatches (the editing distance)
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchChars(char[], int, int, char[], Object, int)
+     */
+    public final int[] searchString(String text, String pattern,
+                                    Object processed, int k) {
+
+<span class="nc" id="L438">        return searchString(text, 0, text.length(), pattern, processed, k);</span>
+
+    }
+
+    /**
+     * Convenience method to search for patterns in Strings. Returns the position
+     * in the text at which the pattern was found. Returns -1 if the pattern was
+     * not found.
+     *
+     * @param text      the String containing the text, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param textStart at which position in the text the comparing should start
+     * @param pattern   the String containing the pattern, may not be
+     *                  &lt;code&gt;null&lt;/code&gt;
+     * @param k         the maximum number of mismatches (the editing distance)
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchChars(char[], int, int, char[], int)
+     */
+    public final int[] searchString(String text, int textStart,
+                                    String pattern, int k) {
+
+<span class="nc" id="L458">        return searchString(text, textStart, text.length(), pattern, k);</span>
+
+    }
+
+    /**
+     * Convenience method to search for patterns in Strings. Returns the position
+     * in the text at which the pattern was found. Returns -1 if the pattern was
+     * not found.
+     *
+     * @param text      the String containing the text, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param textStart at which position in the text the comparing should start
+     * @param pattern   the String containing the pattern, may not be
+     *                  &lt;code&gt;null&lt;/code&gt;
+     * @param processed an Object as returned from
+     *                  {@link #processChars(char[], int)} or {@link #processString(String, int)},
+     *                  may not be &lt;code&gt;null&lt;/code&gt;
+     * @param k         the maximum number of mismatches (the editing distance)
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchChars(char[], int, int, char[], Object, int)
+     */
+    public final int[] searchString(String text, int textStart,
+                                    String pattern, Object processed, int k) {
+
+<span class="nc" id="L481">        return searchString(text, textStart, text.length(), pattern,</span>
+<span class="nc" id="L482">                processed, k);</span>
+
+    }
+
+    /**
+     * Convenience method to search for patterns in Strings. Returns the position
+     * in the text at which the pattern was found. Returns -1 if the pattern was
+     * not found.
+     *
+     * @param text      the String containing the text, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param textStart at which position in the text the comparing should start
+     * @param textEnd   at which position in the text comparing should stop
+     * @param pattern   the String containing the pattern, may not be
+     *                  &lt;code&gt;null&lt;/code&gt;
+     * @param k         the maximum number of mismatches (the editing distance)
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchChars(char[], int, int, char[], int)
+     */
+    public final int[] searchString(String text, int textStart, int textEnd,
+                                    String pattern, int k) {
+
+<span class="fc" id="L503">        return StringSearch.activeStringAccess.searchString(text, textStart,</span>
+<span class="fc" id="L504">                textEnd, pattern, k, this);</span>
+
+    }
+
+    /**
+     * Convenience method to search for patterns in Strings. Returns the position
+     * in the text at which the pattern was found. Returns -1 if the pattern was
+     * not found.
+     *
+     * @param text      the String containing the text, may not be &lt;code&gt;null&lt;/code&gt;
+     * @param textStart at which position in the text the comparing should start
+     * @param textEnd   at which position in the text comparing should stop
+     * @param pattern   the String containing the pattern, may not be
+     *                  &lt;code&gt;null&lt;/code&gt;
+     * @param processed an Object as returned from
+     *                  {@link #processChars(char[], int)} or {@link #processString(String, int)},
+     *                  may not be &lt;code&gt;null&lt;/code&gt;
+     * @param k         the maximum number of mismatches (the editing distance)
+     * @return the position in the text or -1 if the pattern was not found
+     * @see #searchChars(char[], int, int, char[], Object, int)
+     */
+    public final int[] searchString(String text, int textStart, int textEnd,
+                                    String pattern, Object processed, int k) {
+
+<span class="nc" id="L528">        return StringSearch.activeStringAccess.searchString(text, textStart,</span>
+<span class="nc" id="L529">                textEnd, pattern, processed, k, this);</span>
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

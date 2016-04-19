@@ -1,0 +1,3478 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+border: 1px solid #dddddd;
+padding-top: 10px;
+padding-right: 5px;
+padding-left: 5px;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>BNDM.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * BNDM.java</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Created on 21.10.2003</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * eaio: StringSearch - high-performance pattern matching algorithms in Java</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Copyright (c) 2003-2010 Johann Burkard (&#60;http://johannburkard.de&#62;)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * &#60;http://eaio.com&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Permission is hereby granted, free of charge, to any person obtaining a</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * copy of this software and associated documentation files (the &#34;Software&#34;),</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * to deal in the Software without restriction, including without limitation</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * the rights to use, copy, modify, merge, publish, distribute, sublicense,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * and/or sell copies of the Software, and to permit persons to whom the</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Software is furnished to do so, subject to the following conditions:</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * The above copyright notice and this permission notice shall be included</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * in all copies or substantial portions of the Software.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * THE SOFTWARE IS PROVIDED &#34;AS IS&#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * USE OR OTHER DEALINGS IN THE SOFTWARE.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.eaio.stringsearch;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * An implementation of the Backwards Non-deterministic DAWG (Directed acyclic</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_34'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * word graph) Matching algorithm by Gonzalo Navarro and Mathieu Raffinot. See</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * &#34;A Bit-Parallel Approach to Suffix Automata: Fast Extended String Matching&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * (appeared in &#60;em&#62;Proceedings of the 9th Annual Symposium on Combinatorial</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Pattern Matching, 1998&#60;/em&#62;).</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_38'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * &#60;p/&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_39'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * See</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_40'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * {@link com.eaio.stringsearch.BNDMWildcards} for searching with wildcards,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_41'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * {@link com.eaio.stringsearch.BNDMCI} for case insensitive searching</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_42'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * and {@link com.eaio.stringsearch.BNDMWildcardsCI} for case</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_43'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * insensitive searching with wildcards.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * &#60;p/&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_45'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * This is one of the fastest algorithms, but it does not beat the</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_46'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * {@link com.eaio.stringsearch.BoyerMooreHorspoolRaita} and the</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_47'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * {@link com.eaio.stringsearch.BoyerMooreHorspool} algorithms.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_48'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_49'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author &#60;a href=&#34;http://johannburkard.de&#34;&#62;Johann Burkard&#60;/a&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_50'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @version $Id: BNDM.java 3105 2010-06-29 10:38:44Z johann $</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_51'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @see &#60;a href=&#34;http://johannburkard.de/software/stringsearch/&#34; target=&#34;_top&#34;&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_52'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      StringSearch &#38;#8211; high-performance pattern matching algorithms in Java&#60;/a&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_53'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @see &#60;a href=&#34;http://www.dcc.uchile.cl/~gnavarro/ps/cpm98.ps.gz&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_54'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      target=&#34;_top&#34;&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_55'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      http://www.dcc.uchile.cl/~gnavarro/ps/cpm98.ps.gz</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_56'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      &#60;/a&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_57'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @see &#60;a href=&#34;http://www-igm.univ-mlv.fr/~raffinot/ftp/cpm98.ps.gz&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_58'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      target=&#34;_top&#34;&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_59'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      http://www-igm.univ-mlv.fr/~raffinot/ftp/cpm98.ps.gz</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_60'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      &#60;/a&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_61'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @see &#60;a href=&#34;http://citeseer.ist.psu.edu/navarro98bitparallel.html&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_62'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      target=&#34;_top&#34;&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_63'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      http://citeseer.ist.psu.edu/navarro98bitparallel.html</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_64'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *      &#60;/a&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_65'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_66'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class BNDM extends StringSearch {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_67'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_68'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_69'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Constructor for BNDM. Note that it is not required to create multiple</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_70'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * instances.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_71'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_72'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public BNDM() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_73'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    &#9;super();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_74'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_75'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_76'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_77'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Pre-processing of the pattern. The pattern may not exceed 32 bytes in</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_78'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * length. If it does, &#60;b&#62;only it&#39;s first 32 bytes&#60;/b&#62; are processed which</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_79'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * might lead to unexpected results. Returns an &#60;code&#62;int&#60;/code&#62; array which is</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_80'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * serializable.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_81'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_82'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @see com.eaio.stringsearch.StringSearch#processBytes(byte[])</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_83'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_84'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_85'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Object processBytes(byte[] pattern) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_86'/>
+86
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_86'>2</a>
+<span>
+1. processBytes : changed conditional boundary &rarr; SURVIVED<br/>
+2. processBytes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        int end = pattern.length &#60; 32 ? pattern.length : 32;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_87'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_88'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        int[] b = new int[256];</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_89'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_90'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        int j = 1;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_91'/>
+91
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_91'>5</a>
+<span>
+1. processBytes : changed conditional boundary &rarr; KILLED<br/>
+2. processBytes : Changed increment from -1 to 1 &rarr; KILLED<br/>
+3. processBytes : Replaced integer subtraction with addition &rarr; KILLED<br/>
+4. processBytes : Replaced Shift Left with Shift Right &rarr; KILLED<br/>
+5. processBytes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for (int i = end - 1; i &#62;= 0; --i, j &#60;&#60;= 1) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_92'/>
+92
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_92'>1</a>
+<span>
+1. processBytes : Replaced bitwise OR with AND &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            b[index(pattern[i])] |= j;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_93'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_94'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_95'/>
+95
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_95'>1</a>
+<span>
+1. processBytes : mutated return of Object value for com/eaio/stringsearch/BNDM::processBytes to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return b;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_96'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_97'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_98'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_99'/>
+99
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_99'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Pre-processing of the pattern. The pattern may not exceed 32 bytes in</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_100'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * length. If it does, &#60;b&#62;only it&#39;s first 32 bytes&#60;/b&#62; are processed which</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_101'/>
+101
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_101'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * might lead to unexpected results. Returns a {@link CharIntMap} which is</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_102'/>
+102
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_102'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * serializable.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_103'/>
+103
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_103'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_104'/>
+104
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_104'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @see com.eaio.stringsearch.StringSearch#processChars(char[])</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_105'/>
+105
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_105'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_106'/>
+106
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_106'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_107'/>
+107
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_107'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Object processChars(char[] pattern) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_108'/>
+108
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_108'>2</a>
+<span>
+1. processChars : changed conditional boundary &rarr; SURVIVED<br/>
+2. processChars : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        int end = pattern.length &#60; 32 ? pattern.length : 32;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_109'/>
+109
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_109'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_110'/>
+110
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_110'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        CharIntMap b = createCharIntMap(pattern, end, 0);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_111'/>
+111
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_111'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_112'/>
+112
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_112'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        int j = 1;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_113'/>
+113
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_113'>5</a>
+<span>
+1. processChars : changed conditional boundary &rarr; KILLED<br/>
+2. processChars : Changed increment from -1 to 1 &rarr; KILLED<br/>
+3. processChars : Replaced integer subtraction with addition &rarr; KILLED<br/>
+4. processChars : Replaced Shift Left with Shift Right &rarr; KILLED<br/>
+5. processChars : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for (int i = end - 1; i &#62;= 0; --i, j &#60;&#60;= 1) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_114'/>
+114
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_114'>2</a>
+<span>
+1. processChars : Replaced bitwise OR with AND &rarr; KILLED<br/>
+2. processChars : removed call to com/eaio/stringsearch/CharIntMap::set &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            b.set(pattern[i], b.get(pattern[i]) | j);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_115'/>
+115
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_115'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_116'/>
+116
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_116'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_117'/>
+117
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_117'>1</a>
+<span>
+1. processChars : mutated return of Object value for com/eaio/stringsearch/BNDM::processChars to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return b;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_118'/>
+118
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_118'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_119'/>
+119
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_119'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_120'/>
+120
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_120'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_121'/>
+121
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_121'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @see com.eaio.stringsearch.StringSearch#searchBytes(byte[], int, int,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_122'/>
+122
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_122'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *      byte[], java.lang.Object)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_123'/>
+123
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_123'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_124'/>
+124
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_124'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_125'/>
+125
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_125'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public int searchBytes(byte[] text, int textStart, int textEnd,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_126'/>
+126
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_126'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                           byte[] pattern, Object processed) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_127'/>
+127
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_127'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_128'/>
+128
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_128'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        int[] t = (int[]) processed;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_129'/>
+129
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_129'>2</a>
+<span>
+1. searchBytes : changed conditional boundary &rarr; SURVIVED<br/>
+2. searchBytes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        int l = pattern.length &#60; 32 ? pattern.length : 32;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_130'/>
+130
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_130'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_131'/>
+131
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_131'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        int d, j, pos, last;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_132'/>
+132
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_132'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        pos = textStart;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_133'/>
+133
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_133'>3</a>
+<span>
+1. searchBytes : changed conditional boundary &rarr; KILLED<br/>
+2. searchBytes : Replaced integer subtraction with addition &rarr; KILLED<br/>
+3. searchBytes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        while (pos &#60;= textEnd - l) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_134'/>
+134
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_134'>1</a>
+<span>
+1. searchBytes : Replaced integer subtraction with addition &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            j = l - 1;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_135'/>
+135
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_135'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            last = l;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_136'/>
+136
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_136'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            d = -1;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_137'/>
+137
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_137'>1</a>
+<span>
+1. searchBytes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            while (d != 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_138'/>
+138
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_138'>2</a>
+<span>
+1. searchBytes : Replaced integer addition with subtraction &rarr; KILLED<br/>
+2. searchBytes : Replaced bitwise AND with OR &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                d &#38;= t[index(text[pos + j])];</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_139'/>
+139
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_139'>1</a>
+<span>
+1. searchBytes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                if (d != 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_140'/>
+140
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_140'>1</a>
+<span>
+1. searchBytes : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    if (j == 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_141'/>
+141
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_141'>1</a>
+<span>
+1. searchBytes : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                        return pos;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_142'/>
+142
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_142'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_143'/>
+143
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_143'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    last = j;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_144'/>
+144
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_144'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_145'/>
+145
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_145'>1</a>
+<span>
+1. searchBytes : Changed increment from -1 to 1 &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                --j;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_146'/>
+146
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_146'>1</a>
+<span>
+1. searchBytes : Replaced Shift Left with Shift Right &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                d &#60;&#60;= 1;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_147'/>
+147
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_147'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_148'/>
+148
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_148'>1</a>
+<span>
+1. searchBytes : Replaced integer addition with subtraction &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            pos += last;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_149'/>
+149
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_149'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_150'/>
+150
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_150'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_151'/>
+151
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_151'>1</a>
+<span>
+1. searchBytes : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return -1;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_152'/>
+152
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_152'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_153'/>
+153
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_153'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_154'/>
+154
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_154'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_155'/>
+155
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_155'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_156'/>
+156
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_156'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @see com.eaio.stringsearch.StringSearch#searchChars(char[], int, int, char[], Object)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_157'/>
+157
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_157'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_158'/>
+158
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_158'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_159'/>
+159
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_159'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public int searchChars(char[] text, int textStart, int textEnd,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_160'/>
+160
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_160'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                           char[] pattern, Object processed) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_161'/>
+161
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_161'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_162'/>
+162
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_162'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        CharIntMap b = (CharIntMap) processed;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_163'/>
+163
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_163'>2</a>
+<span>
+1. searchChars : changed conditional boundary &rarr; SURVIVED<br/>
+2. searchChars : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        int l = pattern.length &#60; 32 ? pattern.length : 32;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_164'/>
+164
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_164'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_165'/>
+165
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_165'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        int d, j, pos, last;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_166'/>
+166
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_166'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        pos = textStart;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_167'/>
+167
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_167'>3</a>
+<span>
+1. searchChars : changed conditional boundary &rarr; KILLED<br/>
+2. searchChars : Replaced integer subtraction with addition &rarr; KILLED<br/>
+3. searchChars : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        while (pos &#60;= textEnd - l) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_168'/>
+168
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_168'>1</a>
+<span>
+1. searchChars : Replaced integer subtraction with addition &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            j = l - 1;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_169'/>
+169
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_169'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            last = l;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_170'/>
+170
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_170'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            d = -1;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_171'/>
+171
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_171'>1</a>
+<span>
+1. searchChars : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            while (d != 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_172'/>
+172
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_172'>2</a>
+<span>
+1. searchChars : Replaced integer addition with subtraction &rarr; KILLED<br/>
+2. searchChars : Replaced bitwise AND with OR &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                d &#38;= b.get(text[pos + j]);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_173'/>
+173
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_173'>1</a>
+<span>
+1. searchChars : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                if (d != 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_174'/>
+174
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_174'>1</a>
+<span>
+1. searchChars : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    if (j == 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_175'/>
+175
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_175'>1</a>
+<span>
+1. searchChars : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                        return pos;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_176'/>
+176
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_176'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_177'/>
+177
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_177'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    last = j;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_178'/>
+178
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_178'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_179'/>
+179
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_179'>1</a>
+<span>
+1. searchChars : Changed increment from -1 to 1 &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                --j;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_180'/>
+180
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_180'>1</a>
+<span>
+1. searchChars : Replaced Shift Left with Shift Right &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                d &#60;&#60;= 1;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_181'/>
+181
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_181'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_182'/>
+182
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_182'>1</a>
+<span>
+1. searchChars : Replaced integer addition with subtraction &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            pos += last;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_183'/>
+183
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_183'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_184'/>
+184
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_184'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_185'/>
+185
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_185'>1</a>
+<span>
+1. searchChars : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return -1;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_186'/>
+186
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_186'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_187'/>
+187
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_187'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_188'/>
+188
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_188'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_189'/>
+189
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_189'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_190'/>
+190
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_190'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Returns the smaller of two &#60;code&#62;char&#60;/code&#62;s.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_191'/>
+191
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_191'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_192'/>
+192
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_192'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param one the first &#60;code&#62;char&#60;/code&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_193'/>
+193
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_193'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param two the second &#60;code&#62;char&#60;/code&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_194'/>
+194
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_194'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return the smaller &#60;code&#62;char&#60;/code&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_195'/>
+195
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_195'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_196'/>
+196
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_196'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    protected final char min(char one, char two) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_197'/>
+197
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_197'>3</a>
+<span>
+1. min : changed conditional boundary &rarr; SURVIVED<br/>
+2. min : negated conditional &rarr; KILLED<br/>
+3. min : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        return one &#60; two ? one : two;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_198'/>
+198
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_198'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_199'/>
+199
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_199'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_200'/>
+200
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_200'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_201'/>
+201
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_201'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Returns the larger of two &#60;code&#62;char&#60;/code&#62;s.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_202'/>
+202
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_202'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_203'/>
+203
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_203'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param one the first &#60;code&#62;char&#60;/code&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_204'/>
+204
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_204'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param two the second &#60;code&#62;char&#60;/code&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_205'/>
+205
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_205'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return the larger &#60;code&#62;char&#60;/code&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_206'/>
+206
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_206'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_207'/>
+207
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_207'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    protected final char max(char one, char two) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_208'/>
+208
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_208'>3</a>
+<span>
+1. max : changed conditional boundary &rarr; SURVIVED<br/>
+2. max : negated conditional &rarr; KILLED<br/>
+3. max : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        return one &#62; two ? one : two;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_209'/>
+209
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_209'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_210'/>
+210
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_210'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@7abbee99_211'/>
+211
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_211'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_86'>86</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_86'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>processBytes<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>processBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantexta(com.eaio.stringsearch.StringSearchTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_91'>91</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_91'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>processBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>processBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantexta(com.eaio.stringsearch.StringSearchTest)</span></span> Changed increment from -1 to 1 &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>processBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantexta(com.eaio.stringsearch.StringSearchTest)</span></span> Replaced integer subtraction with addition &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>processBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> Replaced Shift Left with Shift Right &rarr; KILLED</p> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>processBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_92'>92</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_92'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>processBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> Replaced bitwise OR with AND &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_95'>95</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_95'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>processBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> mutated return of Object value for com/eaio/stringsearch/BNDM::processBytes to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_108'>108</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_108'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>processChars<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>processChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_113'>113</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_113'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>processChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>processChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> Changed increment from -1 to 1 &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>processChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> Replaced integer subtraction with addition &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>processChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> Replaced Shift Left with Shift Right &rarr; KILLED</p> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>processChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_114'>114</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_114'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>processChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> Replaced bitwise OR with AND &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>processChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> removed call to com/eaio/stringsearch/CharIntMap::set &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_117'>117</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_117'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>processChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> mutated return of Object value for com/eaio/stringsearch/BNDM::processChars to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_129'>129</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_129'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_133'>133</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_133'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantexta(com.eaio.stringsearch.StringSearchTest)</span></span> Replaced integer subtraction with addition &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantexta(com.eaio.stringsearch.StringSearchTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_134'>134</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_134'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> Replaced integer subtraction with addition &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_137'>137</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_137'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_138'>138</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_138'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> Replaced integer addition with subtraction &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testbytenotfound(com.eaio.stringsearch.BDNMTest)</span></span> Replaced bitwise AND with OR &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_139'>139</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_139'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_140'>140</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_140'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.BNDMWildcardsCITest.testIdxLargerThan127a(com.eaio.stringsearch.BNDMWildcardsCITest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_141'>141</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_141'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_145'>145</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_145'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> Changed increment from -1 to 1 &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_146'>146</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_146'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest)</span></span> Replaced Shift Left with Shift Right &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_148'>148</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_148'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testbytenotfound(com.eaio.stringsearch.BDNMTest)</span></span> Replaced integer addition with subtraction &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_151'>151</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_151'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchBytes<br/><b>Killed by : </b>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantexta(com.eaio.stringsearch.StringSearchTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_163'>163</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_163'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_167'>167</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_167'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterLenghtFound_1to32(com.eaio.stringsearch.BDNMTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatternlongerthanStrIII(com.eaio.stringsearch.BDNMTest)</span></span> Replaced integer subtraction with addition &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_168'>168</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_168'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> Replaced integer subtraction with addition &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_171'>171</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_171'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_172'>172</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_172'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> Replaced integer addition with subtraction &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatternNotFound_Lengthmorethan32(com.eaio.stringsearch.BNDMWildcardsTest)</span></span> Replaced bitwise AND with OR &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_173'>173</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_173'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_174'>174</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_174'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatternNotFound_Lengthmorethan32(com.eaio.stringsearch.BNDMWildcardsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_175'>175</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_175'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_179'>179</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_179'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> Changed increment from -1 to 1 &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_180'>180</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_180'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest)</span></span> Replaced Shift Left with Shift Right &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_182'>182</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_182'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatternNotFound_Lengthmorethan32(com.eaio.stringsearch.BNDMWildcardsTest)</span></span> Replaced integer addition with subtraction &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_185'>185</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_185'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchChars<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.testBNDMPatternlongerthanStrIII(com.eaio.stringsearch.BDNMTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_197'>197</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_197'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>min<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>min<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.minmin(com.eaio.stringsearch.BDNMTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>min<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.minmin(com.eaio.stringsearch.BDNMTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@7abbee99_208'>208</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@7abbee99_208'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>max<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>max<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.maxmax(com.eaio.stringsearch.BDNMTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>max<br/><b>Killed by : </b>com.eaio.stringsearch.BDNMTest.maxmax(com.eaio.stringsearch.BDNMTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatternlongerthanStrIII(com.eaio.stringsearch.BNDMWildcardsTest) (3 ms)</li><li>com.eaio.stringsearch.BDNMTest.testBNDMPatternlongerthanStrIII(com.eaio.stringsearch.BDNMTest) (3 ms)</li><li>com.eaio.stringsearch.BNDMCITest.UpperCaseLowerCaseTestCharFail2(com.eaio.stringsearch.BNDMCITest) (4 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testBNDMPatternlongerthanStrIII(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testBNDMPatterLenghtFound_1to32II(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32(com.eaio.stringsearch.StringSearchTest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatternNotFound_Lengthmorethan32(com.eaio.stringsearch.BNDMWildcardsTest) (2 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternlongerthanStrIV(com.eaio.stringsearch.StringSearchTest) (7 ms)</li><li>com.eaio.stringsearch.BDNMTest.testBNDMPatternNotFound_Lengthmorethan32(com.eaio.stringsearch.BDNMTest) (16 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterFound_Lenghtbiggertha32_32right(com.eaio.stringsearch.StringSearchTest) (11 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BNDMCITest) (4 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testBNDMPatterLenghtFound_1to32III(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testBNDMPatternlongerthanStrIV(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytefound(com.eaio.stringsearch.StringSearchTest) (4 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternNotFoundI_Length1to32b(com.eaio.stringsearch.StringSearchTest) (9 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testBNDMPatterLenghtFound_1to32III(com.eaio.stringsearch.BNDMCITest) (8 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testIdxLargerThan127b(com.eaio.stringsearch.BNDMCITest) (3 ms)</li><li>com.eaio.stringsearch.BDNMTest.testBNDMPatternNotFoundII_Length1to32(com.eaio.stringsearch.BDNMTest) (17 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testIdxLargerThan127d(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.UpperCaseLowerCaseTestFail1(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32c(com.eaio.stringsearch.StringSearchTest) (2 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterFound_Lenghtbiggertha32_allrightb(com.eaio.stringsearch.StringSearchTest) (10 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testIdxLargerThan127a(com.eaio.stringsearch.BNDMWildcardsCITest) (2 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testbytepatternlongerthantext(com.eaio.stringsearch.BNDMCITest) (3 ms)</li><li>com.eaio.stringsearch.BDNMTest.ChangeRange(com.eaio.stringsearch.BDNMTest) (33 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testBNDMPatterFound_Lenghtbiggertha32_32right(com.eaio.stringsearch.BNDMCITest) (4 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternNotFound_Lengthmorethan32a(com.eaio.stringsearch.StringSearchTest) (9 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testBNDMPatternNotFoundI_Length1to32(com.eaio.stringsearch.BNDMCITest) (6 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytefoundc(com.eaio.stringsearch.StringSearchTest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternlongerthanStrIa(com.eaio.stringsearch.StringSearchTest) (10 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatterLenghtFound_1to32(com.eaio.stringsearch.BNDMWildcardsTest) (2 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testBNDMPatternlongerthanStrI(com.eaio.stringsearch.BNDMCITest) (15 ms)</li><li>com.eaio.stringsearch.BDNMTest.testbytepatternlongerthantext32(com.eaio.stringsearch.BDNMTest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testbytepatternlongerthantext32(com.eaio.stringsearch.BNDMWildcardsTest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterLenghtFound_1to32b(com.eaio.stringsearch.StringSearchTest) (8 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytenotfoundb(com.eaio.stringsearch.StringSearchTest) (3 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testBNDMPatterLenghtFound_1to32II(com.eaio.stringsearch.BNDMCITest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternNotFoundI_Length1to32a(com.eaio.stringsearch.StringSearchTest) (8 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testbytefound(com.eaio.stringsearch.BNDMWildcardsTest) (2 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytenotfound(com.eaio.stringsearch.StringSearchTest) (3 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testbytenotfound(com.eaio.stringsearch.BNDMCITest) (3 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testBNDMPatternlongerthanStrIV(com.eaio.stringsearch.BNDMCITest) (5 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterFound_Lenghtbiggertha32_32rightb(com.eaio.stringsearch.StringSearchTest) (10 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testBNDMPatternNotFoundI_Length1to32(com.eaio.stringsearch.BNDMWildcardsCITest) (2 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testIdxLargerThan127c(com.eaio.stringsearch.BNDMCITest) (4 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMwildPatternlongerthanStrIII(com.eaio.stringsearch.StringSearchTest) (5 ms)</li><li>com.eaio.stringsearch.BDNMTest.testBNDMPatternNotFoundI_Length1to32(com.eaio.stringsearch.BDNMTest) (35 ms)</li><li>com.eaio.stringsearch.BDNMTest.minmin(com.eaio.stringsearch.BDNMTest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32a(com.eaio.stringsearch.StringSearchTest) (2 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatternNotFoundII_Length1to32(com.eaio.stringsearch.BNDMWildcardsTest) (2 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testBNDMPatternlongerthanStrIII(com.eaio.stringsearch.BNDMCITest) (6 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testBNDMPatterLenghtFound_1to32(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.BDNMTest.testbytepatternlongerthantext(com.eaio.stringsearch.BDNMTest) (4 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext(com.eaio.stringsearch.StringSearchTest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternNotFoundI_Length1to32(com.eaio.stringsearch.StringSearchTest) (10 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testIdxLargerThan127a(com.eaio.stringsearch.BNDMCITest) (5 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytenotfoundc(com.eaio.stringsearch.StringSearchTest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterLenghtFound_1to32IIIb(com.eaio.stringsearch.StringSearchTest) (10 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMwildPatternNotFoundII_Length1to32(com.eaio.stringsearch.StringSearchTest) (5 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternlongerthanStrIIIa(com.eaio.stringsearch.StringSearchTest) (8 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.UpperCaseLowerCaseTestFail3(com.eaio.stringsearch.BNDMWildcardsCITest) (5 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternlongerthanStrII(com.eaio.stringsearch.StringSearchTest) (7 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantext32b(com.eaio.stringsearch.StringSearchTest) (2 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testbytenotfound(com.eaio.stringsearch.BNDMWildcardsTest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMwildextrem(com.eaio.stringsearch.StringSearchTest) (5 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterLenghtFound_1to32III(com.eaio.stringsearch.StringSearchTest) (21 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMwildPatternNotFound_Lengthmorethan32(com.eaio.stringsearch.StringSearchTest) (5 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testbytefound(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testIdxLargerThan127b(com.eaio.stringsearch.BNDMWildcardsCITest) (11 ms)</li><li>com.eaio.stringsearch.BNDMCITest.UpperCaseLowerCaseTestFail2(com.eaio.stringsearch.BNDMCITest) (3 ms)</li><li>com.eaio.stringsearch.BNDMCITest.UpperCaseLowerCaseTestCharFail3(com.eaio.stringsearch.BNDMCITest) (4 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMwildPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.StringSearchTest) (6 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMwildPatterFound_Lenghtbiggertha32_32right(com.eaio.stringsearch.StringSearchTest) (6 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantexta(com.eaio.stringsearch.StringSearchTest) (2 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatternlongerthanStrIV(com.eaio.stringsearch.BNDMWildcardsTest) (2 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterFound_Lenghtbiggertha32_32righta(com.eaio.stringsearch.StringSearchTest) (9 ms)</li><li>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_32right(com.eaio.stringsearch.BDNMTest) (12 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMwildPatternlongerthanStrII(com.eaio.stringsearch.StringSearchTest) (5 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterLenghtFound_1to32IIb(com.eaio.stringsearch.StringSearchTest) (12 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterFound_Lenghtbiggertha32_allrighta(com.eaio.stringsearch.StringSearchTest) (9 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.StringSearchTest) (10 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testbytepatternlongerthantext32(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildextrem(com.eaio.stringsearch.BNDMWildcardsTest) (2 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternlongerthanStrIb(com.eaio.stringsearch.StringSearchTest) (7 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMwildPatternNotFoundI_Length1to32(com.eaio.stringsearch.StringSearchTest) (12 ms)</li><li>com.eaio.stringsearch.BDNMTest.testBNDMPatternlongerthanStrII(com.eaio.stringsearch.BDNMTest) (4 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testbytepatternlongerthantext(com.eaio.stringsearch.BNDMWildcardsTest) (2 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternlongerthanStrIVb(com.eaio.stringsearch.StringSearchTest) (7 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.UpperCaseLowerCaseTestFail2(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testBNDMPatternlongerthanStrII(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.BDNMTest.testBNDMPatterLenghtFound_1to32(com.eaio.stringsearch.BDNMTest) (3 ms)</li><li>com.eaio.stringsearch.BDNMTest.testBNDMPatternlongerthanStrIV(com.eaio.stringsearch.BDNMTest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMwildPatternlongerthanStrIV(com.eaio.stringsearch.StringSearchTest) (4 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testIdxLargerThan127c(com.eaio.stringsearch.BNDMWildcardsCITest) (4 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testbytepatternlongerthantext(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternNotFoundII_Length1to32a(com.eaio.stringsearch.StringSearchTest) (9 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterLenghtFound_1to32II(com.eaio.stringsearch.StringSearchTest) (11 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternlongerthanStrI(com.eaio.stringsearch.StringSearchTest) (8 ms)</li><li>com.eaio.stringsearch.BDNMTest.testbytenotfound(com.eaio.stringsearch.BDNMTest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.UpperCaseLowerCaseTestFail4(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BNDMWildcardsTest) (2 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternlongerthanStrIIb(com.eaio.stringsearch.StringSearchTest) (7 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantextb(com.eaio.stringsearch.StringSearchTest) (2 ms)</li><li>com.eaio.stringsearch.BNDMCITest.UpperCaseLowerCaseTest(com.eaio.stringsearch.BNDMCITest) (5 ms)</li><li>com.eaio.stringsearch.BDNMTest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BDNMTest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatterFound_Lenghtbiggertha32_32right(com.eaio.stringsearch.BNDMWildcardsTest) (3 ms)</li><li>com.eaio.stringsearch.BNDMCITest.UpperCaseLowerCaseTestCharFail1(com.eaio.stringsearch.BNDMCITest) (4 ms)</li><li>com.eaio.stringsearch.BNDMCITest.UpperCaseLowerCaseTestFail3(com.eaio.stringsearch.BNDMCITest) (4 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternlongerthanStrIII(com.eaio.stringsearch.StringSearchTest) (7 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMwildPatternlongerthanStrI(com.eaio.stringsearch.StringSearchTest) (5 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytepatternlongerthantextc(com.eaio.stringsearch.StringSearchTest) (3 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testIdxLargerThan127d(com.eaio.stringsearch.BNDMCITest) (4 ms)</li><li>com.eaio.stringsearch.BDNMTest.maxmax(com.eaio.stringsearch.BDNMTest) (4 ms)</li><li>com.eaio.stringsearch.BNDMCITest.UpperCaseLowerCaseTestFail4(com.eaio.stringsearch.BNDMCITest) (4 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatternlongerthanStrII(com.eaio.stringsearch.BNDMWildcardsTest) (2 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternlongerthanStrIIa(com.eaio.stringsearch.StringSearchTest) (7 ms)</li><li>com.eaio.stringsearch.BNDMCITest.UpperCaseLowerCaseTestCharFail4(com.eaio.stringsearch.BNDMCITest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatternlongerthanStrI(com.eaio.stringsearch.BNDMWildcardsTest) (2 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testBNDMPatterFound_Lenghtbiggertha32_32right(com.eaio.stringsearch.BNDMWildcardsCITest) (4 ms)</li><li>com.eaio.stringsearch.BDNMTest.testBNDMPatternlongerthanStrI(com.eaio.stringsearch.BDNMTest) (4 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testBNDMPatternlongerthanStrI(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternlongerthanStrIIIb(com.eaio.stringsearch.StringSearchTest) (7 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsTest.testBNDMwildPatternNotFoundI_Length1to32(com.eaio.stringsearch.BNDMWildcardsTest) (21 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMwildPatterLenghtFound_1to32(com.eaio.stringsearch.StringSearchTest) (10 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterLenghtFound_1to32(com.eaio.stringsearch.StringSearchTest) (10 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatterLenghtFound_1to32a(com.eaio.stringsearch.StringSearchTest) (13 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testbytepatternlongerthantext32(com.eaio.stringsearch.BNDMCITest) (4 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testBNDMPatternlongerthanStrIVa(com.eaio.stringsearch.StringSearchTest) (7 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testBNDMPatterLenghtFound_1to32(com.eaio.stringsearch.BNDMCITest) (4 ms)</li><li>com.eaio.stringsearch.BNDMCITest.testBNDMPatternlongerthanStrII(com.eaio.stringsearch.BNDMCITest) (4 ms)</li><li>com.eaio.stringsearch.StringSearchTest.testbytenotfounda(com.eaio.stringsearch.StringSearchTest) (3 ms)</li><li>com.eaio.stringsearch.BNDMCITest.UpperCaseLowerCaseTestFail1(com.eaio.stringsearch.BNDMCITest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testBNDMPatterFound_Lenghtbiggertha32_allright(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li><li>com.eaio.stringsearch.BNDMWildcardsCITest.testbytenotfound(com.eaio.stringsearch.BNDMWildcardsCITest) (3 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.4
+
+</body>
+</html>

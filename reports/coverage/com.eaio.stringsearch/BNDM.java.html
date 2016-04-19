@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BNDM.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">stringsearch</a> &gt; <a href="index.source.html" class="el_package">com.eaio.stringsearch</a> &gt; <span class="el_source">BNDM.java</span></div><h1>BNDM.java</h1><pre class="source lang-java linenums">/*
+ * BNDM.java
+ *
+ * Created on 21.10.2003
+ *
+ * eaio: StringSearch - high-performance pattern matching algorithms in Java
+ * Copyright (c) 2003-2010 Johann Burkard (&lt;http://johannburkard.de&gt;)
+ * &lt;http://eaio.com&gt;
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the &quot;Software&quot;),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
+package com.eaio.stringsearch;
+
+
+/**
+ * An implementation of the Backwards Non-deterministic DAWG (Directed acyclic
+ * word graph) Matching algorithm by Gonzalo Navarro and Mathieu Raffinot. See
+ * &quot;A Bit-Parallel Approach to Suffix Automata: Fast Extended String Matching&quot;
+ * (appeared in &lt;em&gt;Proceedings of the 9th Annual Symposium on Combinatorial
+ * Pattern Matching, 1998&lt;/em&gt;).
+ * &lt;p/&gt;
+ * See
+ * {@link com.eaio.stringsearch.BNDMWildcards} for searching with wildcards,
+ * {@link com.eaio.stringsearch.BNDMCI} for case insensitive searching
+ * and {@link com.eaio.stringsearch.BNDMWildcardsCI} for case
+ * insensitive searching with wildcards.
+ * &lt;p/&gt;
+ * This is one of the fastest algorithms, but it does not beat the
+ * {@link com.eaio.stringsearch.BoyerMooreHorspoolRaita} and the
+ * {@link com.eaio.stringsearch.BoyerMooreHorspool} algorithms.
+ *
+ * @author &lt;a href=&quot;http://johannburkard.de&quot;&gt;Johann Burkard&lt;/a&gt;
+ * @version $Id: BNDM.java 3105 2010-06-29 10:38:44Z johann $
+ * @see &lt;a href=&quot;http://johannburkard.de/software/stringsearch/&quot; target=&quot;_top&quot;&gt;
+ *      StringSearch &amp;#8211; high-performance pattern matching algorithms in Java&lt;/a&gt;
+ * @see &lt;a href=&quot;http://www.dcc.uchile.cl/~gnavarro/ps/cpm98.ps.gz&quot;
+ *      target=&quot;_top&quot;&gt;
+ *      http://www.dcc.uchile.cl/~gnavarro/ps/cpm98.ps.gz
+ *      &lt;/a&gt;
+ * @see &lt;a href=&quot;http://www-igm.univ-mlv.fr/~raffinot/ftp/cpm98.ps.gz&quot;
+ *      target=&quot;_top&quot;&gt;
+ *      http://www-igm.univ-mlv.fr/~raffinot/ftp/cpm98.ps.gz
+ *      &lt;/a&gt;
+ * @see &lt;a href=&quot;http://citeseer.ist.psu.edu/navarro98bitparallel.html&quot;
+ *      target=&quot;_top&quot;&gt;
+ *      http://citeseer.ist.psu.edu/navarro98bitparallel.html
+ *      &lt;/a&gt;
+ */
+public class BNDM extends StringSearch {
+
+    /**
+     * Constructor for BNDM. Note that it is not required to create multiple
+     * instances.
+     */
+    public BNDM() {
+<span class="fc" id="L73">    	super();</span>
+<span class="fc" id="L74">    }</span>
+
+    /**
+     * Pre-processing of the pattern. The pattern may not exceed 32 bytes in
+     * length. If it does, &lt;b&gt;only it's first 32 bytes&lt;/b&gt; are processed which
+     * might lead to unexpected results. Returns an &lt;code&gt;int&lt;/code&gt; array which is
+     * serializable.
+     *
+     * @see com.eaio.stringsearch.StringSearch#processBytes(byte[])
+     */
+    @Override
+    public Object processBytes(byte[] pattern) {
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        int end = pattern.length &lt; 32 ? pattern.length : 32;</span>
+
+<span class="fc" id="L88">        int[] b = new int[256];</span>
+
+<span class="fc" id="L90">        int j = 1;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (int i = end - 1; i &gt;= 0; --i, j &lt;&lt;= 1) {</span>
+<span class="fc" id="L92">            b[index(pattern[i])] |= j;</span>
+        }
+
+<span class="fc" id="L95">        return b;</span>
+    }
+
+    /**
+     * Pre-processing of the pattern. The pattern may not exceed 32 bytes in
+     * length. If it does, &lt;b&gt;only it's first 32 bytes&lt;/b&gt; are processed which
+     * might lead to unexpected results. Returns a {@link CharIntMap} which is
+     * serializable.
+     *
+     * @see com.eaio.stringsearch.StringSearch#processChars(char[])
+     */
+    @Override
+    public Object processChars(char[] pattern) {
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        int end = pattern.length &lt; 32 ? pattern.length : 32;</span>
+
+<span class="fc" id="L110">        CharIntMap b = createCharIntMap(pattern, end, 0);</span>
+
+<span class="fc" id="L112">        int j = 1;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        for (int i = end - 1; i &gt;= 0; --i, j &lt;&lt;= 1) {</span>
+<span class="fc" id="L114">            b.set(pattern[i], b.get(pattern[i]) | j);</span>
+        }
+
+<span class="fc" id="L117">        return b;</span>
+    }
+
+    /**
+     * @see com.eaio.stringsearch.StringSearch#searchBytes(byte[], int, int,
+     *      byte[], java.lang.Object)
+     */
+    @Override
+    public int searchBytes(byte[] text, int textStart, int textEnd,
+                           byte[] pattern, Object processed) {
+
+<span class="fc" id="L128">        int[] t = (int[]) processed;</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        int l = pattern.length &lt; 32 ? pattern.length : 32;</span>
+
+        int d, j, pos, last;
+<span class="fc" id="L132">        pos = textStart;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        while (pos &lt;= textEnd - l) {</span>
+<span class="fc" id="L134">            j = l - 1;</span>
+<span class="fc" id="L135">            last = l;</span>
+<span class="fc" id="L136">            d = -1;</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">            while (d != 0) {</span>
+<span class="fc" id="L138">                d &amp;= t[index(text[pos + j])];</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">                if (d != 0) {</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">                    if (j == 0) {</span>
+<span class="fc" id="L141">                        return pos;</span>
+                    }
+<span class="fc" id="L143">                    last = j;</span>
+                }
+<span class="fc" id="L145">                --j;</span>
+<span class="fc" id="L146">                d &lt;&lt;= 1;</span>
+            }
+<span class="fc" id="L148">            pos += last;</span>
+        }
+
+<span class="fc" id="L151">        return -1;</span>
+
+    }
+
+    /**
+     * @see com.eaio.stringsearch.StringSearch#searchChars(char[], int, int, char[], Object)
+     */
+    @Override
+    public int searchChars(char[] text, int textStart, int textEnd,
+                           char[] pattern, Object processed) {
+
+<span class="fc" id="L162">        CharIntMap b = (CharIntMap) processed;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        int l = pattern.length &lt; 32 ? pattern.length : 32;</span>
+
+        int d, j, pos, last;
+<span class="fc" id="L166">        pos = textStart;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        while (pos &lt;= textEnd - l) {</span>
+<span class="fc" id="L168">            j = l - 1;</span>
+<span class="fc" id="L169">            last = l;</span>
+<span class="fc" id="L170">            d = -1;</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">            while (d != 0) {</span>
+<span class="fc" id="L172">                d &amp;= b.get(text[pos + j]);</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">                if (d != 0) {</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">                    if (j == 0) {</span>
+<span class="fc" id="L175">                        return pos;</span>
+                    }
+<span class="fc" id="L177">                    last = j;</span>
+                }
+<span class="fc" id="L179">                --j;</span>
+<span class="fc" id="L180">                d &lt;&lt;= 1;</span>
+            }
+<span class="fc" id="L182">            pos += last;</span>
+        }
+
+<span class="fc" id="L185">        return -1;</span>
+
+    }
+
+    /**
+     * Returns the smaller of two &lt;code&gt;char&lt;/code&gt;s.
+     *
+     * @param one the first &lt;code&gt;char&lt;/code&gt;
+     * @param two the second &lt;code&gt;char&lt;/code&gt;
+     * @return the smaller &lt;code&gt;char&lt;/code&gt;
+     */
+    protected final char min(char one, char two) {
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">        return one &lt; two ? one : two;</span>
+    }
+
+    /**
+     * Returns the larger of two &lt;code&gt;char&lt;/code&gt;s.
+     *
+     * @param one the first &lt;code&gt;char&lt;/code&gt;
+     * @param two the second &lt;code&gt;char&lt;/code&gt;
+     * @return the larger &lt;code&gt;char&lt;/code&gt;
+     */
+    protected final char max(char one, char two) {
+<span class="fc bfc" id="L208" title="All 2 branches covered.">        return one &gt; two ? one : two;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

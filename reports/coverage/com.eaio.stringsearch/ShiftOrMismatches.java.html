@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ShiftOrMismatches.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">stringsearch</a> &gt; <a href="index.source.html" class="el_package">com.eaio.stringsearch</a> &gt; <span class="el_source">ShiftOrMismatches.java</span></div><h1>ShiftOrMismatches.java</h1><pre class="source lang-java linenums">/*
+ * ShiftOrMismatches.java
+ *
+ * Created on 14.11.2003.
+ *
+ * eaio: StringSearch - high-performance pattern matching algorithms in Java
+ * Copyright (c) 2003-2010 Johann Burkard (&lt;http://johannburkard.de&gt;)
+ * &lt;http://eaio.com&gt;
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the &quot;Software&quot;),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
+package com.eaio.stringsearch;
+
+/**
+ * An implementation of the Shift-Or algorithm with mismatches.
+ * &lt;p/&gt;
+ * The pattern length may not be larger than
+ * &lt;code&gt;31 / &amp;lceil; log&lt;sub&gt;2&lt;/sub&gt;(k + 1) &amp;rceil;&lt;/code&gt;. If it is, only
+ * characters to the maximum pattern length will be processed which might
+ * lead to unexpected results.
+ * &lt;p/&gt;
+ * &lt;table style=&quot;border: 1px solid #ccc&quot; cellpadding=&quot;4&quot;&gt;
+ * &lt;tr&gt;
+ * &lt;td&gt;Number of mismatches (&lt;code&gt;k&lt;/code&gt;)&lt;/td&gt;
+ * &lt;td&gt;Maximum pattern length&lt;/td&gt;
+ * &lt;/tr&gt;
+ * &lt;tr&gt;
+ * &lt;td&gt;0&lt;/td&gt;
+ * &lt;td&gt;31&lt;/td&gt;
+ * &lt;/tr&gt;
+ * &lt;tr&gt;
+ * &lt;td&gt;1&lt;/td&gt;
+ * &lt;td&gt;15&lt;/td&gt;
+ * &lt;/tr&gt;
+ * &lt;tr&gt;
+ * &lt;td&gt;2-3&lt;/td&gt;
+ * &lt;td&gt;10&lt;/td&gt;
+ * &lt;/tr&gt;
+ * &lt;tr&gt;
+ * &lt;td&gt;4-5&lt;/td&gt;
+ * &lt;td&gt;7&lt;/td&gt;
+ * &lt;/tr&gt;
+ * &lt;/table&gt;
+ * &lt;p/&gt;
+ * Note that the number of mismatches might not be correct if
+ * &lt;code&gt;k&lt;/code&gt; is set higher than half the pattern length.
+ *
+ * @author &lt;a href=&quot;http://johannburkard.de&quot;&gt;Johann Burkard&lt;/a&gt;
+ * @version $Id: ShiftOrMismatches.java 3105 2010-06-29 10:38:44Z johann $
+ * @see &lt;a href=&quot;http://johannburkard.de/software/stringsearch/&quot;&gt;StringSearch
+ *      &amp;#8211; high-performance pattern matching algorithms in Java&lt;/a&gt;
+ * @see &lt;a href=&quot;ftp://sunsite.dcc.uchile.cl/pub/users/rbaeza/papers/CACM92.ps.gz&quot;&gt;
+ *      ftp://sunsite.dcc.uchile.cl/pub/users/rbaeza/papers/CACM92.ps.gz
+ *      &lt;/a&gt;
+ * @see &lt;a href=&quot;http://citeseer.ist.psu.edu/50265.html&quot; target=&quot;_top&quot;&gt;
+ *      http://citeseer.ist.psu.edu/50265.html
+ *      &lt;/a&gt;
+ * @see #processBytes(byte[], int)
+ * @see #processChars(char[], int)
+ */
+public class ShiftOrMismatches extends MismatchSearch {
+
+    /**
+     * Constructor for ShiftOrMismatches. Note that it is not required to create
+     * multiple instances.
+     */
+    public ShiftOrMismatches() {
+<span class="fc" id="L85">        super();</span>
+<span class="fc" id="L86">    }</span>
+
+    /**
+     * The Object returned is serializable.
+     *
+     * @throws IllegalArgumentException if the pattern length is larger than
+     *                                  31 / &amp;lceil; log&lt;sub&gt;2&lt;/sub&gt;(k + 1) &amp;rceil;
+     * @see com.eaio.stringsearch.MismatchSearch#processBytes(byte[], int)
+     */
+    @Override
+    public Object processBytes(byte[] pattern, int k) {
+
+<span class="fc" id="L98">        int b = clog2(k + 1) + 1;</span>
+<span class="fc" id="L99">        int l = Math.min(pattern.length, 31 / b);</span>
+<span class="fc" id="L100">        int lim = k &lt;&lt; ((l - 1) * b);</span>
+<span class="fc" id="L101">        int ovmask = 0;</span>
+<span class="fc" id="L102">        int mask = 1 &lt;&lt; (b - 1);</span>
+
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        for (int j = 0; j &lt; l; ++j) {</span>
+<span class="fc" id="L105">            ovmask |= mask;</span>
+<span class="fc" id="L106">            mask &lt;&lt;= b;</span>
+        }
+
+<span class="fc" id="L109">        int tInit = ovmask &gt;&gt; (b - 1);</span>
+<span class="fc" id="L110">        int[] T = new int[256];</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        for (int a = 0; a &lt; T.length; ++a) {</span>
+<span class="fc" id="L112">            T[a] = tInit;</span>
+        }
+
+<span class="fc" id="L115">        lim += 1 &lt;&lt; ((l - 1) * b);</span>
+<span class="fc" id="L116">        mask = 1;</span>
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        for (int j = 0; j &lt; l; ++j) {</span>
+<span class="fc" id="L119">            T[index(pattern[j])] &amp;= ~mask;</span>
+<span class="fc" id="L120">            mask &lt;&lt;= b;</span>
+        }
+
+<span class="fc" id="L123">        return new Object[]{T, mask - 1, ovmask, lim, b};</span>
+
+    }
+
+    /**
+     * The Object returned is serializable.
+     *
+     * @throws IllegalArgumentException if the pattern length is larger than
+     *                                  31 / &amp;lceil; log&lt;sub&gt;2&lt;/sub&gt;(k + 1) &amp;rceil;
+     * @see com.eaio.stringsearch.MismatchSearch#processChars(char[], int)
+     */
+    @Override
+    public Object processChars(char[] pattern, int k) {
+
+<span class="fc" id="L137">        int b = clog2(k + 1) + 1;</span>
+<span class="fc" id="L138">        int l = Math.min(pattern.length, 31 / b);</span>
+<span class="fc" id="L139">        int lim = k &lt;&lt; ((l - 1) * b);</span>
+<span class="fc" id="L140">        int ovmask = 0;</span>
+<span class="fc" id="L141">        int mask = 1 &lt;&lt; (b - 1);</span>
+
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        for (int j = 0; j &lt; l; ++j) {</span>
+<span class="fc" id="L144">            ovmask |= mask;</span>
+<span class="fc" id="L145">            mask &lt;&lt;= b;</span>
+        }
+
+<span class="fc" id="L148">        int tInit = ovmask &gt;&gt; (b - 1);</span>
+<span class="fc" id="L149">        CharIntMap T = createCharIntMap(pattern, l, tInit);</span>
+
+<span class="fc" id="L151">        lim += 1 &lt;&lt; ((l - 1) * b);</span>
+<span class="fc" id="L152">        mask = 1;</span>
+
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        for (int j = 0; j &lt; l; ++j) {</span>
+<span class="fc" id="L155">            T.set(pattern[j], T.get(pattern[j]) &amp; ~mask);</span>
+<span class="fc" id="L156">            mask &lt;&lt;= b;</span>
+        }
+
+<span class="fc" id="L159">        return new Object[]{T, mask - 1, ovmask, lim, b};</span>
+
+    }
+
+    /**
+     * @see com.eaio.stringsearch.MismatchSearch#searchBytes(byte[], int, int,
+     *      byte[], Object, int)
+     */
+    @Override
+    public int[] searchBytes(byte[] text, int textStart, int textEnd,
+                             byte[] pattern, Object processed, int k) {
+
+<span class="fc" id="L171">        Object[] o = (Object[]) processed;</span>
+<span class="fc" id="L172">        int[] T = (int[]) o[0];</span>
+<span class="fc" id="L173">        final int mask = (Integer) o[1];</span>
+<span class="fc" id="L174">        final int ovmask = (Integer) o[2];</span>
+<span class="fc" id="L175">        final int lim = (Integer) o[3];</span>
+<span class="fc" id="L176">        final int b = (Integer) o[4];</span>
+<span class="fc" id="L177">        final int l = Math.min(pattern.length, 31 / b);</span>
+
+<span class="fc" id="L179">        int s = mask &amp; ~ovmask;</span>
+<span class="fc" id="L180">        int ov = ovmask;</span>
+
+<span class="fc bfc" id="L182" title="All 2 branches covered.">        for (int i = textStart; i &lt; textEnd; ++i) {</span>
+<span class="fc" id="L183">            s = ((s &lt;&lt; b) + T[index(text[i])]) &amp; mask;</span>
+<span class="fc" id="L184">            ov = ((ov &lt;&lt; b) | (s &amp; ovmask)) &amp; mask;</span>
+<span class="fc" id="L185">            s &amp;= ~ovmask;</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">            if ((s | ov) &lt; lim) {</span>
+<span class="fc" id="L187">                return new int[]{i - l + 1, s &gt;&gt; b * (l - 1)};</span>
+            }
+        }
+
+<span class="fc" id="L191">        return new int[]{-1, 0};</span>
+
+    }
+
+    /**
+     * @see com.eaio.stringsearch.MismatchSearch#searchChars(char[], int, int,
+     *      char[], Object, int)
+     */
+    @Override
+    public int[] searchChars(char[] text, int textStart, int textEnd,
+                             char[] pattern, Object processed, int k) {
+
+<span class="fc" id="L203">        Object[] o = (Object[]) processed;</span>
+<span class="fc" id="L204">        CharIntMap T = (CharIntMap) o[0];</span>
+<span class="fc" id="L205">        final int mask = (Integer) o[1];</span>
+<span class="fc" id="L206">        final int ovmask = (Integer) o[2];</span>
+<span class="fc" id="L207">        final int lim = (Integer) o[3];</span>
+<span class="fc" id="L208">        final int b = (Integer) o[4];</span>
+<span class="fc" id="L209">        final int l = Math.min(pattern.length, 31 / b);</span>
+
+<span class="fc" id="L211">        int s = mask &amp; ~ovmask;</span>
+<span class="fc" id="L212">        int ov = ovmask;</span>
+
+<span class="fc bfc" id="L214" title="All 2 branches covered.">        for (int i = textStart; i &lt; textEnd; ++i) {</span>
+<span class="fc" id="L215">            s = ((s &lt;&lt; b) + T.get(text[i])) &amp; mask;</span>
+<span class="fc" id="L216">            ov = ((ov &lt;&lt; b) | (s &amp; ovmask)) &amp; mask;</span>
+<span class="fc" id="L217">            s &amp;= ~ovmask;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">            if ((s | ov) &lt; lim) {</span>
+<span class="fc" id="L219">                return new int[]{i - l + 1, s &gt;&gt; b * (l - 1)};</span>
+            }
+        }
+
+<span class="fc" id="L223">        return new int[]{-1, 0};</span>
+
+    }
+
+    /**
+     * Ceiling of log2(x).
+     *
+     * @param x x
+     * @return &amp;lceil;log2(x)&amp;rceil;
+     */
+    private int clog2(int x) {
+<span class="fc" id="L234">        int i = 0;</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">        while (x &gt; (1 &lt;&lt; i)) {</span>
+<span class="fc" id="L236">            ++i;</span>
+        }
+<span class="fc" id="L238">        return i;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BNDMCI.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">stringsearch</a> &gt; <a href="index.source.html" class="el_package">com.eaio.stringsearch</a> &gt; <span class="el_source">BNDMCI.java</span></div><h1>BNDMCI.java</h1><pre class="source lang-java linenums">/* 
+ * BNDMCI.java
+ * 
+ * Created on 11.10.2004.
+ *
+ * eaio: StringSearch - high-performance pattern matching algorithms in Java
+ * Copyright (c) 2003-2010 Johann Burkard (&lt;http://johannburkard.de&gt;)
+ * &lt;http://eaio.com&gt;
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the &quot;Software&quot;),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
+package com.eaio.stringsearch;
+
+/**
+ * This is a case-insensitive version of the
+ * {@link com.eaio.stringsearch.BNDM} algorithm.
+ * &lt;p/&gt;
+ * Because of the bit-parallel {@link com.eaio.stringsearch.BNDM} algorithm,
+ * there is no speed penalty when using this algorithm -- using the case
+ * sensitive version is as fast as using the case insensitive version.
+ *
+ * @author &lt;a href=&quot;http://johannburkard.de&quot;&gt;Johann Burkard&lt;/a&gt;
+ * @version $Id: BNDMCI.java 3105 2010-06-29 10:38:44Z johann $
+ * @see &lt;a href=&quot;http://johannburkard.de/software/stringsearch/&quot;&gt;StringSearch
+ *      &amp;#8211; high-performance pattern matching algorithms in Java&lt;/a&gt;
+ */
+public class BNDMCI extends BNDM {
+
+    /**
+     * Constructor for BNDMCI. Note that it is not required to create multiple
+     * instances.
+     */
+    public BNDMCI() {
+<span class="fc" id="L51">        super();</span>
+<span class="fc" id="L52">    }</span>
+
+    /**
+     * @see com.eaio.stringsearch.StringSearch#processBytes(byte[])
+     */
+    @Override
+    public Object processBytes(byte[] pattern) {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        int end = pattern.length &lt; 32 ? pattern.length : 32;</span>
+
+<span class="fc" id="L61">        int[] b = new int[256];</span>
+
+<span class="fc" id="L63">        int j = 1;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        for (int i = end - 1; i &gt;= 0; --i, j &lt;&lt;= 1) {</span>
+<span class="fc bfc" id="L65" title="All 4 branches covered.">            if (pattern[i] &gt; 64 &amp;&amp; pattern[i] &lt; 91) {</span>
+<span class="fc" id="L66">                b[pattern[i]] |= j;</span>
+<span class="fc" id="L67">                b[pattern[i] + 32] |= j;</span>
+<span class="fc bfc" id="L68" title="All 4 branches covered.">            } else if (pattern[i] &gt; 96 &amp;&amp; pattern[i] &lt; 123) {</span>
+<span class="fc" id="L69">                b[pattern[i]] |= j;</span>
+<span class="fc" id="L70">                b[pattern[i] - 32] |= j;</span>
+<span class="fc" id="L71">            } else {</span>
+<span class="fc" id="L72">                char idx = (char) index(pattern[i]);</span>
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">                if (idx &gt; 127) {</span>
+                    char c;
+<span class="fc bfc" id="L76" title="All 2 branches covered.">                    if (Character.isUpperCase(idx)) {</span>
+<span class="fc" id="L77">                        c = Character.toLowerCase(idx);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">                        if (c &lt; 256) {</span>
+<span class="fc" id="L79">                            b[c] |= j;</span>
+                        }
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">                    } else if (Character.isLowerCase(idx)) {</span>
+<span class="fc" id="L82">                        c = Character.toUpperCase(idx);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">                        if (c &lt; 256) {</span>
+<span class="fc" id="L84">                            b[c] |= j;</span>
+                        }
+                    }
+                }
+
+<span class="fc" id="L89">                b[idx] |= j;</span>
+            }
+        }
+
+<span class="fc" id="L93">        return b;</span>
+    }
+
+    /**
+     * @see com.eaio.stringsearch.BNDM#processChars(char[])
+     * @see com.eaio.stringsearch.StringSearch#processChars(char[])
+     */
+    @Override
+    public Object processChars(char[] pattern) {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        int end = pattern.length &lt; 32 ? pattern.length : 32;</span>
+
+        char t;
+
+<span class="fc" id="L106">        char min = Character.MAX_VALUE;</span>
+<span class="fc" id="L107">        char max = Character.MIN_VALUE;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        for (int i = 0; i &lt; end; i++) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            if (Character.isLetter(pattern[i])) {</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">                min = min &lt; (t = min(Character.toLowerCase(pattern[i]),</span>
+<span class="fc" id="L111">                        Character.toUpperCase(pattern[i]))) ? min : t;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">                max = max &gt; (t = max(Character.toLowerCase(pattern[i]),</span>
+<span class="fc" id="L113">                        Character.toUpperCase(pattern[i]))) ? max : t;</span>
+<span class="fc" id="L114">            } else {</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">                max = max &gt; pattern[i] ? max : pattern[i];</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">                min = min &lt; pattern[i] ? min : pattern[i];</span>
+            }
+        }
+<span class="fc" id="L119">        CharIntMap b = new CharIntMap(max - min + 1, min, 0);</span>
+
+<span class="fc" id="L121">        int j = 1;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        for (int i = end - 1; i &gt;= 0; --i, j &lt;&lt;= 1) {</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">            if (Character.isLetter(pattern[i])) {</span>
+<span class="fc" id="L124">                t = Character.toLowerCase(pattern[i]);</span>
+<span class="fc" id="L125">                b.set(t, b.get(t) | j);</span>
+<span class="fc" id="L126">                t = Character.toUpperCase(t);</span>
+<span class="fc" id="L127">                b.set(t, b.get(t) | j);</span>
+<span class="fc" id="L128">            } else {</span>
+<span class="fc" id="L129">                b.set(pattern[i], b.get(pattern[i]) | j);</span>
+            }
+        }
+
+<span class="fc" id="L133">        return b;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>
